@@ -162,7 +162,7 @@ def create_sequences(data: np.ndarray, threshold: float = 0.02, future_days: int
 
 def build_model(input_short_shape: tuple, input_long_shape: tuple) -> tf.keras.Model:
     """
-    Builds and compiles the TensorFlow Keras Bidirectional LSTM model.
+    Generates the TensorFlow Keras Bidirectional LSTM model architecture.
     """
     input_short = Input(shape=input_short_shape, name='input_short')
     input_long = Input(shape=input_long_shape, name='input_long')

@@ -1,9 +1,13 @@
+# backend/app/config.py
+
 import os
 
-API_KEY = "4XR8Y3WX2AZHHL0E"
-MODEL_DIR = "models"
-os.makedirs(MODEL_DIR, exist_ok=True)
+# --- IMPORTANT ---
+# Do NOT hardcode your API key here in production.
+# This value will be fetched from an environment variable set in Railway.
+ALPHA_VANTAGE_API_KEY = os.environ.get("ALPHA_VANTAGE_API_KEY")
 
+# Define your top BSE stocks here
 TOP_BSE_STOCKS = {
     "RELIANCE.BSE": "Reliance Industries",
     "TCS.BSE": "Tata Consultancy Services",
@@ -12,23 +16,14 @@ TOP_BSE_STOCKS = {
     "ICICIBANK.BSE": "ICICI Bank",
     "SBIN.BSE": "State Bank of India",
     "TATAMOTORS.BSE": "Tata Motors",
-    "SUNPHARMA.BSE": "Sun Pharmaceuticals",
     "BHARTIARTL.BSE": "Bharti Airtel",
     "LT.BSE": "Larsen & Toubro",
-    "BAJFINANCE.BSE": "Bajaj Finance",
     "AXISBANK.BSE": "Axis Bank",
-    "ITC.BSE": "ITC",
-    "HINDUNILVR.BSE": "Hindustan Unilever",
-    "ULTRACEMCO.BSE": "UltraTech Cement",
-    "MARUTI.BSE": "Maruti Suzuki",
-    "TATASTEEL.BSE": "Tata Steel",
-    "JSWSTEEL.BSE": "JSW Steel",
-    "ONGC.BSE": "ONGC",
-    "NTPC.BSE": "NTPC",
-    "POWERGRID.BSE": "Power Grid",
-    "COALINDIA.BSE": "Coal India",
+    # Add more as needed
 }
 
-
-short_window = 30
-long_window = 120
+# You can also move short_window and long_window here if you prefer a single source of truth
+# for all hyperparameters, and import them into main.py.
+# For now, if main.py defines them, that's fine too.
+# short_window = 30
+# long_window = 120

@@ -1,31 +1,32 @@
 import React, { useEffect } from 'react';
-import { Container, Typography, Button, Stack, Box, useTheme } from '@mui/material'; // Import useTheme
+import { Container, Typography, Button, Stack, Box, useTheme } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
-import '../App.css'; // Global styles for general app styling (if any)
+import '../App.css';
+
+// *** NEW: Import the background image using Vite's asset handling ***
+import homeBackgroundImage from '../public/stocks-6.jpg'; // Adjust path if your image is in a subfolder like public/images/
 
 const headingText = "Predict Your Stock Moves 📈";
 const subText = "Use LSTM-powered models to predict stock trends of top Indian companies.";
 
 const Home = () => {
-  const location = useLocation(); // Get the current location object
-  const theme = useTheme(); // Access the theme object
+  const location = useLocation();
+  const theme = useTheme();
 
-  // useEffect for smooth scrolling to sections based on URL hash
   useEffect(() => {
-    // Only attempt to scroll if on the home page and hash matches
     if (location.pathname === '/' && location.hash === '#about-section') {
       const timer = setTimeout(() => {
         const aboutSection = document.getElementById('about-section');
         if (aboutSection) {
-          aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); // block: 'start' ensures it scrolls to the top of the element
+          aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 300); // Increased delay to 300ms for robustness
+      }, 300);
 
-      return () => clearTimeout(timer); // Cleanup timer on unmount or re-render
+      return () => clearTimeout(timer);
     }
-  }, [location]); // Re-run effect when the location object (including hash) changes
+  }, [location]);
 
   return (
     <Box>
@@ -35,7 +36,8 @@ const Home = () => {
       <Box
         sx={{
           minHeight: '100vh',
-          backgroundImage: "url('/src/public/stocks-6.jpg')", // Make sure this path is correct
+          // *** MODIFIED LINE: Use the imported image variable ***
+          backgroundImage: `url(${homeBackgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           display: 'flex',
@@ -63,21 +65,19 @@ const Home = () => {
             width: '100%',
             boxSizing: 'border-box',
             position: 'relative',
-            paddingTop: '80px', // Keep safe from fixed navbar
+            paddingTop: '80px',
           }}
         >
           <Container sx={{ textAlign: 'center', color: '#fff', py: 4 }}>
-            {/* Main Heading with Framer Motion animations */}
             <Typography
               component="h1"
               sx={{
-                fontWeight: 900, // Matched with Predict.jsx heading
-                fontFamily: `'Poppins', sans-serif`, // Poppins font for Hero Heading
-                // Decreased font size by ~20%
+                fontWeight: 900,
+                fontFamily: `'Poppins', sans-serif`,
                 fontSize: { xs: '1.8rem', md: '2.8rem', lg: '3.8rem' },
                 mb: 3,
-                textShadow: '3px 3px 6px rgba(0,0,0,0.7)', // Add a bit more shadow for prominence
-                lineHeight: 1.1, // Adjust line height if needed
+                textShadow: '3px 3px 6px rgba(0,0,0,0.7)',
+                lineHeight: 1.1,
               }}
             >
               {headingText.split(" ").map((word, index) => (
@@ -93,12 +93,11 @@ const Home = () => {
               ))}
             </Typography>
 
-            {/* Sub Text with Framer Motion animations */}
             <Typography
               variant="h6"
               sx={{
                 mt: 2,
-                fontFamily: `'Inter', sans-serif`, // Inter font for Hero Subtext
+                fontFamily: `'Inter', sans-serif`,
                 fontSize: { xs: '1rem', md: '1.25rem' },
                 color: '#ddd',
               }}
@@ -119,7 +118,6 @@ const Home = () => {
               ))}
             </Typography>
 
-            {/* Action Buttons */}
             <Stack direction="row" justifyContent="center" spacing={2} mt={4}>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -137,9 +135,8 @@ const Home = () => {
                     fontWeight: 600, px: 4, py: 1.5,
                     transition: 'all 0.3s ease-in-out',
                     '&:hover': {
-                      // Highlight with primary color
                       boxShadow: `0 0 0 3px ${theme.palette.primary.main}, 0 4px 10px rgba(0,0,0,0.3)`,
-                      transform: 'translateY(-2px)', // Subtle lift
+                      transform: 'translateY(-2px)',
                     },
                   }}
                 >
@@ -163,9 +160,8 @@ const Home = () => {
                     fontWeight: 600, px: 4, py: 1.5,
                     transition: 'all 0.3s ease-in-out',
                     '&:hover': {
-                      // Highlight with secondary color
                       boxShadow: `0 0 0 3px ${theme.palette.secondary.main}, 0 4px 10px rgba(0,0,0,0.3)`,
-                      transform: 'translateY(-2px)', // Subtle lift
+                      transform: 'translateY(-2px)',
                     },
                   }}
                 >
@@ -179,7 +175,7 @@ const Home = () => {
 
       {/* Technical Explanation Section - Target for 'About' link */}
       <motion.div
-        id="about-section" // This ID allows direct navigation from Navbar
+        id="about-section"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -223,7 +219,7 @@ const Home = () => {
                 sx={{
                   fontWeight: 'bold',
                   mb: 2,
-                  fontFamily: `'Poppins', sans-serif`, // Poppins font for Technical Section Heading
+                  fontFamily: `'Poppins', sans-serif`,
                 }}
               >
                 🧠 How Our Stock Predictor Works
@@ -231,7 +227,7 @@ const Home = () => {
               <Typography
                 sx={{
                   mb: 2,
-                  fontFamily: `'Inter', sans-serif`, // Inter font for Technical Section Body
+                  fontFamily: `'Inter', sans-serif`,
                 }}
               >
                 Our system uses an advanced <strong>LSTM (Long Short-Term Memory)</strong> model trained on recent market data to forecast the next move in stock prices.
@@ -239,7 +235,7 @@ const Home = () => {
               <Typography
                 sx={{
                   mb: 2,
-                  fontFamily: `'Inter', sans-serif`, // Inter font for Technical Section Body
+                  fontFamily: `'Inter', sans-serif`,
                 }}
               >
                 ✅ It focuses on price changes of <strong>at least 2%</strong> over the next <strong>3 days</strong>. This threshold is ideal for balancing accuracy and actionability.
@@ -247,7 +243,7 @@ const Home = () => {
               <Typography
                 sx={{
                   mb: 2,
-                  fontFamily: `'Inter', sans-serif`, // Inter font for Technical Section Body
+                  fontFamily: `'Inter', sans-serif`,
                 }}
               >
                 📊 It leverages <strong>technical indicators</strong> like <strong>MACD</strong>, <strong>RSI</strong>, and <strong>SMA20</strong> to make reliable predictions.
@@ -255,7 +251,7 @@ const Home = () => {
               <Typography
                 sx={{
                   mb: 2,
-                  fontFamily: `'Inter', sans-serif`, // Inter font for Technical Section Body
+                  fontFamily: `'Inter', sans-serif`,
                 }}
               >
                 ⚙️ Predictions are based on real-time data fetched via API, and model logic is optimized for each stock using a dual-window Bi-LSTM setup.
@@ -275,7 +271,7 @@ const Home = () => {
             >
               <Box
                 component="img"
-                src="https://media.istockphoto.com/id/1867035079/photo/analytics-and-data-management-systems-business-analytics-and-data-management-systems-to-make.jpg?s=612x612&w=0&k=20&c=tFcJnBIWlkPhIumrPtkSJwFRNDMtdVfJ1CYbfUlx5fE=" // *** REMEMBER TO REPLACE WITH YOUR ACTUAL IMAGE PATH ***
+                src="https://media.istockphoto.com/id/1867035079/photo/analytics-and-data-management-systems-business-analytics-and-data-management-systems-to-make.jpg?s=612x612&w=0&k=20&c=tFcJnBIWlkPhIumrPtkSJwFRNDMtdVfJ1CYbfUlx5fE="
                 alt="AI Model Diagram or Data Visualization"
                 sx={{
                   maxWidth: '100%',

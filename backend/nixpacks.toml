@@ -1,0 +1,20 @@
+# backend/nixpacks.toml
+
+# Install system-level dependencies required by some Python libraries
+[phases.setup]
+aptPkgs = ["build-essential", "libatlas-base-dev", "python3-dev"] 
+
+# Define the build commands
+[phases.build]
+commands = [
+  "pip install --upgrade pip", # Ensure pip is up-to-date
+  "pip install -r requirements.txt" # Install your Python dependencies
+]
+
+# Define the command to start your FastAPI application using Gunicorn
+[start]
+cmd = "gunicorn -w 2 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT"
+
+# Specify the Python version to use for the build and runtime environment
+[python]
+version = "3.10" # Or "3.11" if 3.10 causes issues, but 3.10 is generally stable for TF 2.x

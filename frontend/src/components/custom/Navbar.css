@@ -1,0 +1,204 @@
+/* Navbar Styling - Always have dark, semi-transparent background */
+.navbar {
+    background-color: rgba(34, 34, 34, 0.5); /* Always semi-transparent dark */
+    backdrop-filter: blur(8px); /* Optional: Apply blur */
+    -webkit-backdrop-filter: blur(8px); /* Safari support */
+
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    position: fixed; /* Keep fixed for the main navbar */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999; /* Higher z-index for the main navbar */
+    transition: all 0.3s ease-out;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    max-width: 1300px;
+    width: 100%;
+    padding: 0 20px;
+    position: relative; /* IMPORTANT: This is crucial for absolute positioning of mobile menu */
+}
+
+.navbar-logo {
+    color: #fff;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    z-index: 1000; /* Higher than menu z-index */
+}
+
+.nav-menu {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    grid-gap: 20px;
+    list-style: none;
+    text-align: center;
+    width: 60vw;
+    justify-content: end;
+    margin-right: 2rem;
+}
+
+.nav-item {
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    font-weight: 500;
+}
+
+.nav-links::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #00bcd4;
+    transition: width 0.3s ease-out;
+}
+
+.nav-links:hover::after {
+    width: 100%;
+}
+
+.nav-links:hover {
+    color: #00bcd4;
+    transform: translateY(-2px);
+}
+
+.menu-icon {
+    display: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #fff;
+    z-index: 1000; /* Higher than menu z-index */
+}
+
+/* --- */
+/* Mobile Styles */
+/* --- */
+@media screen and (max-width: 960px) {
+
+    .menu-icon {
+        display: block; /* Show menu icon on mobile */
+    }
+
+    .nav-menu {
+        /* Dropdown menu positioning and appearance */
+        display: flex;
+        flex-direction: column;
+        
+        position: absolute; /* IMPORTANT: Position relative to .navbar-container */
+        top: 80px; /* Position directly below the 80px tall navbar */
+        right: 0; /* Align to the right edge of the navbar-container */
+        width: 100%; /* Take full width of the .navbar-container */
+
+        max-height: 0; /* Initially hidden: 0 height */
+        opacity: 0; /* Initially hidden: 0 opacity */
+        overflow-y: hidden; /* Hide scrollbar when hidden */
+        pointer-events: none; /* Disable clicks when hidden */
+        
+        background: rgba(34, 34, 34, 0.95); /* Semi-transparent background for the dropdown itself */
+        backdrop-filter: blur(8px); /* Blur the dropdown's own background (optional, can be removed) */
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Add a shadow for depth */
+        border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+        border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border at the top */
+        
+        transition: max-height 0.4s ease-out, opacity 0.4s ease-out; /* Smooth transition for opening/closing */
+        z-index: 998; /* Below main navbar (999), above page content and blur overlay */
+        
+        justify-content: flex-start; /* Align menu items to the top */
+        align-items: center; /* Center menu items horizontally */
+        padding: 0; /* Reset padding here */
+    }
+
+    .nav-menu.active {
+        max-height: 320px; /* Adjust this value for the desired open height of the dropdown */
+        opacity: 1; /* Fully visible */
+        overflow-y: auto; /* Enable scrolling if content exceeds max-height */
+        pointer-events: all; /* Enable clicks/interactions when menu is active */
+    }
+
+    .nav-item {
+        width: 100%;
+        height: auto;
+        padding: 0; /* Remove padding from nav-item */
+    }
+
+    .nav-links {
+        text-align: center;
+        padding: 1rem; /* Adjust padding here for desired item height/spacing */
+        width: 100%;
+        display: block;
+        font-size: 1.1rem;
+        border-bottom: none; 
+    }
+
+    .nav-links:hover {
+        background-color: rgba(0, 188, 212, 0.15); /* Highlight on hover */
+        color: #00bcd4;
+        transform: none;
+    }
+
+    .nav-links::after {
+        display: none; /* Hide desktop underline for mobile dropdown */
+    }
+
+    /* This class needs to be toggled on the <body> element via JavaScript */
+    body.no-scroll {
+        overflow: hidden; /* Prevents background content from scrolling when menu is open */
+    }
+}
+
+/* --- */
+/* NEW CSS FOR THE PAGE BLUR OVERLAY */
+/* --- */
+.page-blur-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4); /* Slight dark tint over blur */
+    backdrop-filter: blur(5px); /* Apply blur to the background content */
+    -webkit-backdrop-filter: blur(5px); /* Safari support */
+    z-index: 997; /* Below the navbar (999) and the mobile menu (998) */
+    opacity: 0; /* Start hidden */
+    pointer-events: none; /* Do not block interaction when hidden */
+    transition: opacity 0.4s ease-out, backdrop-filter 0.4s ease-out, background-color 0.4s ease-out;
+}
+
+.page-blur-overlay.active {
+    opacity: 1; /* Fully visible when active */
+    pointer-events: all; /* Allow blocking interaction when active */
+}
+
+/* Optional: Further adjustments for even smaller screens if necessary */
+@media screen and (max-width: 600px) {
+    .navbar-logo {
+        font-size: 1.6rem;
+    }
+    .menu-icon {
+        font-size: 1.6rem;
+    }
+}

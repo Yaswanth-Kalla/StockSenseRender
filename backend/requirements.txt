@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pandas
+numpy
+scikit-learn
+tensorflow
+joblib
+ta
+alpha_vantage
+imblearn
+python-multipart
